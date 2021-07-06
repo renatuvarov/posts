@@ -1,0 +1,6 @@
+FROM postgres
+
+RUN sed -i 's/:999:/:5081:/g' /etc/group
+RUN sed -i 's/:999:999:/:5081:5081:/g' /etc/passwd
+
+CMD [ "postgres", "-c", "max_connections=10000"]

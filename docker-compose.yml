@@ -1,0 +1,57 @@
+version: '3.7'
+
+services:
+  nginx:
+    image: library/nginx:1.19.6-alpine
+    container_name: symfony-nginx
+    restart: unless-stopped
+    ports:
+      - 80:80
+    volumes:
+      - ./project:/var/www
+      - ./docker/nginx:/etc/nginx/conf.d
+    networks:
+      - symfony
+  php:
+    build:
+      args:
+        user: symfonyuser
+        uid: 1000
+      context: ./docker/php-fpm
+      dockerfile: Dockerfile
+    image: symfonyimage
+    container_name: symfony-php
+    restart: unless-stopped
+    working_dir: /var/www/
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - ./project:/var/www
+      - ./docker/php-fpm/ini:/usr/local/etc/php
+    networks:
+      - symfony
+  postgres:
+    container_name: "dockerpgsql"
+    restart: unless-stopped
+    tty: true
+    image: postgres
+    volumes:
+      - v-postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+      PGDATA: /var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - symfony
+networks:
+  symfony:
+    driver: bridge
+volumes:
+  v-postgres:
+  pgadmin-data:

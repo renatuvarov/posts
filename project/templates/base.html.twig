@@ -1,0 +1,230 @@
+{#
+    @var category App\Entity\Category
+#}
+{% set popular = popular_posts.getPopular() %}
+{% set categories = categories_cache.getCategories() %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}Colorlib Balita &mdash; Minimal Blog Template{% endblock %}</title>
+    {% block stylesheets %}
+
+        <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300, 400,700" rel="stylesheet">
+
+        <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/animate.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/owl.carousel.min.css') }}">
+
+        <link rel="stylesheet" href="{{ asset('fonts/ionicons/css/ionicons.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('fonts/fontawesome/css/font-awesome.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('fonts/flaticon/font/flaticon.css') }}">
+
+        <!-- Theme Style -->
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    {% endblock %}
+</head>
+<body>
+<header role="banner">
+    <div class="top-bar">
+        <div class="container">
+            <div class="row">
+                <div class="col-9 social">
+                    <a href="#"><span class="fa fa-twitter"></span></a>
+                    <a href="#"><span class="fa fa-facebook"></span></a>
+                    <a href="#"><span class="fa fa-instagram"></span></a>
+                    <a href="#"><span class="fa fa-youtube-play"></span></a>
+                    <a href="#"><span class="fa fa-vimeo"></span></a>
+                    <a href="#"><span class="fa fa-snapchat"></span></a>
+                </div>
+                <div class="col-3 search-top">
+                    <!-- <a href="#"><span class="fa fa-search"></span></a> -->
+                    <form action="#" class="search-top-form">
+                        <span class="icon fa fa-search"></span>
+                        <input type="text" id="s" placeholder="Type keyword to search...">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container logo-wrap">
+        <div class="row pt-5">
+            <div class="col-12 text-center">
+                <a class="absolute-toggle d-block d-md-none" data-toggle="collapse" href="#navbarMenu" role="button"
+                   aria-expanded="false" aria-controls="navbarMenu"><span class="burger-lines"></span></a>
+                <h1 class="site-logo"><a href="{{ path('posts.index') }}">Balita</a></h1>
+            </div>
+        </div>
+    </div>
+
+    <nav class="navbar navbar-expand-md  navbar-light bg-light">
+        <div class="container">
+
+
+            <div class="collapse navbar-collapse" id="navbarMenu">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ path('posts.index') }}">Home</a>
+                    </li>
+                    {% if categories|length > 0 %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle"
+                               id="dropdown05"
+                               data-toggle="dropdown"
+                               aria-haspopup="true"
+                               aria-expanded="false">Categories
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdown05">
+                                {% for category in categories_cache.getCategories() %}
+                                    <a class="dropdown-item" href="{{ path('categories.view', {category: category.id}) }}">{{ category.title }}</a>
+                                {% endfor %}
+                            </div>
+                        </li>
+                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('categories.create') }}">New Category</a>
+                    </li>
+                    {% if categories|length > 0 %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('posts.create') }}">New Post</a>
+                        </li>
+                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('messages.create') }}">Contacts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('messages.index') }}">All Messages</a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+</header>
+<!-- END header -->
+{% block slider %}{% endblock %}
+<!-- END section -->
+<section class="site-section py-sm mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                {% block body_title %}{% endblock %}
+            </div>
+        </div>
+        <div class="row blog-entries">
+
+            {% block body %}{% endblock %}
+
+            <!-- END main-content -->
+
+            <div class="col-md-12 col-lg-4 sidebar">
+                <div class="sidebar-box search-form-wrap">
+                    <form action="#" class="search-form">
+                        <div class="form-group">
+                            <span class="icon fa fa-search"></span>
+                            <input type="text" class="form-control" id="s" placeholder="Type a keyword and hit enter">
+                        </div>
+                    </form>
+                </div>
+                <!-- END sidebar-box -->
+                <div class="sidebar-box">
+                    <div class="bio text-center">
+                        <img src="{{ asset('images/person_1.jpg') }}" alt="Image Placeholder" class="img-fluid">
+                        <div class="bio-body">
+                            <h2>Meagan Smith</h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Exercitationem facilis sunt repellendus excepturi beatae porro debitis voluptate nulla quo veniam fuga sit molestias minus.</p>
+                            <p><a href="#" class="btn btn-primary btn-sm">Read my bio</a></p>
+                            <p class="social">
+                                <a href="#" class="p-2"><span class="fa fa-facebook"></span></a>
+                                <a href="#" class="p-2"><span class="fa fa-twitter"></span></a>
+                                <a href="#" class="p-2"><span class="fa fa-instagram"></span></a>
+                                <a href="#" class="p-2"><span class="fa fa-youtube-play"></span></a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- END sidebar-box -->
+                {% if popular|length > 0 %}
+                    <div class="sidebar-box">
+                        <h3 class="heading">Popular Posts</h3>
+                        <div class="post-entry-sidebar">
+                            <ul>
+                                {% for popularPost in popular %}
+                                    <li>
+                                        <a href="{{ path('posts.view', {post: popularPost.id}) }}">
+                                            <img src="{{ asset(popularPost.img) }}" alt="Image placeholder" class="mr-4">
+                                            <div class="text">
+                                                <h4>{{ popularPost.title }}</h4>
+                                                <div class="post-meta">
+                                                    <span class="mr-2">{{ popularPost.createdAt.format('F j, Y') }} </span> &bullet;
+                                                    <span class="ml-2"><span class="fa fa-eye"></span> {{ popularPost.views }}</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                {% endif %}
+                <!-- END sidebar-box -->
+
+                {% if categories|length > 0 %}
+                    <div class="sidebar-box">
+                        <h3 class="heading">Categories</h3>
+                        <ul class="categories">
+                            {% for category in categories %}
+                                <li><a href="{{ path('categories.view', {category: category.id}) }}">{{ category.title }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+                <!-- END sidebar-box -->
+
+            </div>
+            <!-- END sidebar -->
+
+        </div>
+    </div>
+</section>
+{% block related %}{% endblock %}
+<footer class="site-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                Copyright &copy;<script>document.write(new Date().getFullYear());</script>
+                All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a
+                        href="https://colorlib.com" target="_blank">Colorlib</a>
+                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- END footer -->
+
+<!-- loader -->
+<div id="loader" class="show fullscreen">
+    <svg class="circular" width="48px" height="48px">
+        <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/>
+        <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
+                stroke="#f4b214"/>
+    </svg>
+</div>
+
+{% block javascripts %}
+    <script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ asset('js/jquery-migrate-3.0.0.js') }}"></script>
+    <script src="{{ asset('js/popper.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.waypoints.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.stellar.min.js') }}"></script>
+
+
+    <script src="{{ asset('js/main.js') }}"></script>
+{% endblock %}
+</body>
+</html>

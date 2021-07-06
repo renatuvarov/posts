@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Category{% endblock %}
+
+{% block body_title %}
+    <h2 class="mb-4">New Category</h2>
+{% endblock %}
+
+{% block body %}
+    <div style="width: 650px;">
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-md-4 form-group">
+                {{ form_label(form.title, 'Title') }}
+                {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.title) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 form-group">
+                <input type="submit" value="Create" class="btn btn-primary">
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

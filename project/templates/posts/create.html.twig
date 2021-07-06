@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Post{% endblock %}
+
+{% block body_title %}
+    <h2 class="mb-4">New Post</h2>
+{% endblock %}
+
+{% block body %}
+    <div style="width: 650px;">
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="form-group w-75">
+                {{ form_label(form.title, 'Title') }}
+                {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.title) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="w-75 form-group">
+                {{ form_label(form.text, 'Content') }}
+                {{ form_widget(form.text, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.text) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="w-75 form-group">
+                {{ form_label(form.img, 'Post Image') }}
+                {{ form_widget(form.img, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.img) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="w-75 form-group">
+                {{ form_label(form.categories, 'Categories') }}
+                {{ form_widget(form.categories, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.categories) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 form-group">
+                <input type="submit" value="Save" class="btn btn-primary">
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

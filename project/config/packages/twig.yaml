@@ -1,0 +1,9 @@
+twig:
+    default_path: '%kernel.project_dir%/templates'
+    globals:
+        categories_cache: '@App\Service\CategoriesCacheService'
+        popular_posts: '@App\Service\PopularPostsService'
+
+when@test:
+    twig:
+        strict_variables: true

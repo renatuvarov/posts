@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block body %}
+    <div class="row blog-entries" style="width: 650px;">
+        <div class="col-md-12 col-lg-8 main-content">
+            <h1 class="mb-4">{{ post.title }}</h1>
+            <div class="post-meta">
+                {% for category in post.categories %}
+                    <span class="category">{{ category.title }}</span>
+                {% endfor %}
+                <p class="mt-3">
+                    <span class="mr-2">{{ post.createdAt.format('F j, Y') }} </span> &bullet;
+                    <span class="ml-2"><span class="fa fa-eye"></span> {{ post.views }}</span>
+                </p>
+            </div>
+            <div class="post-content-body">
+                {% autoescape %}
+                    {{ post.text|raw }}
+                {% endautoescape %}
+            </div>
+            <div class="pt-5">
+                <p>Categories:
+                    {% for category in post.categories %}
+                        <a href="{{ path('categories.view', {category: category.id}) }}">{{ category.title }}</a>
+                    {% endfor %}
+                </p>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block related %}
+    {% if related|length > 0 %}
+        <div class="container mb-5">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="mb-3 ">Related Post</h2>
+                </div>
+            </div>
+            <div class="row">
+                {% for relatedPost in related %}
+                    <div class="col-md-6 col-lg-4">
+                        <a href="#" class="a-block d-flex align-items-center height-md"
+                           style="background-image: url('{{ relatedPost.img }}'); ">
+                            <div class="text">
+                                <div class="post-meta">
+                                    {% for categoryItem in relatedPost.categories %}
+                                        <span class="category">{{ categoryItem.title }}</span>
+                                    {% endfor %}
+                                    <p class="mt-3">
+                                        <span class="mr-2">{{ relatedPost.createdAt.format('F j, Y') }} </span> &bullet;
+                                        <span class="ml-2"><span class="fa fa-eye"></span> {{ relatedPost.views }}</span>
+                                    </p>
+                                </div>
+                                <h3>{{ relatedPost.title }}</h3>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
